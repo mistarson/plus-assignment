@@ -23,4 +23,8 @@ import lombok.experimental.SuperBuilder;
     @Column(length = 20, nullable = false)
     private String email;
 
+   protected void setIdForRegister(String id) {
+      this.id = id;
+   }
+
 }

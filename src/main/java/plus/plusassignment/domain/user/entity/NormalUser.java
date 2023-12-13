@@ -11,9 +11,13 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class NormalUser extends User{
+public class NormalUser extends User {
 
     @Column(length = 50, nullable = false)
     private String password;
+
+    public void setIdForRegister(String id) {
+        super.setIdForRegister(id);
+    }
 
 }
