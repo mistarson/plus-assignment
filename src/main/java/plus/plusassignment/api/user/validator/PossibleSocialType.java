@@ -1,4 +1,4 @@
-package plus.plusassignment.api.user.validation;
+package plus.plusassignment.api.user.validator;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -9,12 +9,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Constraint(validatedBy = PasswordMatchConfirmPasswordValidator.class)
-@Target({ElementType.TYPE})
+@Constraint(validatedBy = PossibleSocialTypeValidator.class)
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PasswordMatchConfirmPassword {
+public @interface PossibleSocialType {
 
-    String message() default "비밀번호와 비밀번호 확인이 일치하지 않습니다.";
+    String message() default "지원하지 않는 소셜 로그인 타입입니다.";
 
     Class<?>[] groups() default {};
 

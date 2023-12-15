@@ -3,8 +3,8 @@ package plus.plusassignment.api.user.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import plus.plusassignment.api.user.validation.PasswordMatchConfirmPassword;
-import plus.plusassignment.api.user.validation.PasswordNotContainUsername;
+import plus.plusassignment.api.user.validator.PasswordMatchConfirmPassword;
+import plus.plusassignment.api.user.validator.PasswordNotContainUsername;
 import plus.plusassignment.domain.user.entity.NormalUser;
 
 public class NormalUserRegisterDTO {
