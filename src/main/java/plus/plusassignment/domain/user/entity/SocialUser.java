@@ -20,4 +20,8 @@ public class SocialUser extends User {
     @Enumerated(EnumType.STRING)
     private SocialType socialType;
 
+    public void setIdForRegister(String id) {
+        super.setIdForRegister(id);
+    }
+
 }
