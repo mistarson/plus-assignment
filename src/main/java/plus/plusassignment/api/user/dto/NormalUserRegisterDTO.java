@@ -3,6 +3,7 @@ package plus.plusassignment.api.user.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import plus.plusassignment.api.user.validator.PasswordMatchConfirmPassword;
 import plus.plusassignment.api.user.validator.PasswordNotContainUsername;
 import plus.plusassignment.domain.user.entity.NormalUser;
@@ -18,11 +19,11 @@ public class NormalUserRegisterDTO {
             @NotBlank String confirmPassword
     ) {
 
-        public NormalUser toEntity() {
+        public NormalUser toEntity(PasswordEncoder passwordEncoder) {
             return NormalUser.builder()
                     .username(username)
                     .email(email)
-                    .password(password)
+                    .password(passwordEncoder.encode(password))
                     .build();
         }
 
