@@ -9,8 +9,8 @@ import lombok.Getter;
 @Getter
 public enum SocialType {
 
-    KAKAO("KAKAO", "KakaoLoginServiceImpl"),
-    NAVER("NAVER", "NaverLoginServiceImpl");
+    KAKAO("KAKAO", "kakaoLoginServiceImpl"),
+    NAVER("NAVER", "naverLoginServiceImpl");
 
     private static final Map<String, String> SOCIAL_TYPE_MAP = Collections.unmodifiableMap(
             Stream.of(values()).collect(
