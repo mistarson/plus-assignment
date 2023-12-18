@@ -45,4 +45,9 @@ public class ApiSocialUserLoginService {
         return oauthLoginService.getUserInfo(accessToken);
     }
 
+    public void validateDuplicateEmail(String email) {
+        socialUserService.findByEmail(email)
+                .ifPresent(user -> {throw new IllegalArgumentException("중복된 이메일입니다.");});
+    }
+
 }

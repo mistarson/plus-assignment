@@ -52,4 +52,12 @@ public class ApiNormalUserService {
             throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
         }
     }
+
+    public void validateDuplicateUsername(String username) {
+        normalUserService.findByUsernameIfPresentThrowException(username);
+    }
+
+    public void validateDuplicateEmail(String email) {
+        normalUserService.findByEmailIfPresentThrowException(email);
+    }
 }
