@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import plus.plusassignment.api.user.dto.SocialLoginDTO;
-import plus.plusassignment.api.user.dto.SocialLoginDTO.Response;
 import plus.plusassignment.api.user.service.ApiSocialUserLoginService;
+import plus.plusassignment.global.jwt.TokenLoginDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,9 +25,9 @@ public class ApiSocialUserController {
 
         String authorization = httpServletRequest.getHeader("Authorization");
 
-        Response responseDTO = apiSocialUserLoginService.socialLogin(
+        TokenLoginDTO tokenLoginDTO = apiSocialUserLoginService.socialLogin(
                 authorization, requestDTO.socialType());
 
-        return ResponseEntity.ok(responseDTO);
+        return ResponseEntity.ok(tokenLoginDTO);
     }
 }

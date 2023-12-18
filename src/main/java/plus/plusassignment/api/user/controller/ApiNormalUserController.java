@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import plus.plusassignment.api.user.dto.NormalUserLoginDTO;
 import plus.plusassignment.api.user.dto.NormalUserRegisterDTO;
 import plus.plusassignment.api.user.dto.NormalUserRegisterDTO.Response;
 import plus.plusassignment.api.user.service.ApiNormalUserService;
+import plus.plusassignment.global.jwt.TokenLoginDTO;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +28,16 @@ public class ApiNormalUserController {
         Response responseDTO = apiNormalUserService.registerNormalUser(requestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> loginNormalUser(
+            @Valid @RequestBody NormalUserLoginDTO normalUserLoginDTO) {
+
+        TokenLoginDTO jwtLoginResponseDTO = apiNormalUserService.loginNormalUser(
+                normalUserLoginDTO);
+
+        return ResponseEntity.ok(jwtLoginResponseDTO);
     }
 
 }

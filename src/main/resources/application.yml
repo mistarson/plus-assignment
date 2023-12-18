@@ -7,7 +7,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
@@ -17,3 +17,11 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+
+jwt:
+  token:
+    header: Authorization
+    secret: ${JWT_SECRET}
+    access-time: 3600000 # 60분
+    refresh-time: 2628000000 # 한달
+    issuer:  SCH

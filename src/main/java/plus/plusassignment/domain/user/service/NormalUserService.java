@@ -28,6 +28,11 @@ public class NormalUserService {
         });
     }
 
+    public NormalUser findByUsername(String username) {
+        return normalUserRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 정보가 없습니다."));
+    }
+
     @Transactional
     public NormalUser registerNormalUser(NormalUser normalUser) {
 
