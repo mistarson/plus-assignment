@@ -16,7 +16,8 @@ public class NormalUserRegisterDTO {
             @Email String email,
             @Pattern(regexp = "^[a-z0-9]{3,20}$") String username,
             @Pattern(regexp = "^[a-zA-Z0-9!@#$%^&*?_]{4,15}$") String password,
-            @NotBlank String confirmPassword
+            @NotBlank String confirmPassword,
+            @NotBlank String authCode
     ) {
 
         public NormalUser toEntity(PasswordEncoder passwordEncoder) {

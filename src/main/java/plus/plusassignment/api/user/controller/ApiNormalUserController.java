@@ -42,7 +42,7 @@ public class ApiNormalUserController {
         return ResponseEntity.ok(jwtLoginResponseDTO);
     }
 
-    @GetMapping("/duplication-username")
+    @GetMapping("/duplication-usernames")
     public ResponseEntity<?> validateDuplicateUsername(@RequestParam String username) {
 
         apiNormalUserService.validateDuplicateUsername(username);
@@ -50,12 +50,16 @@ public class ApiNormalUserController {
         return ResponseEntity.ok("사용 가능");
     }
 
-    @GetMapping("/duplication-email")
+    @GetMapping("/duplication-emails")
     public ResponseEntity<?> validateDuplicateEmail(@RequestParam String email) {
 
         apiNormalUserService.validateDuplicateEmail(email);
 
         return ResponseEntity.ok("사용 가능");
     }
+
+
+
+
 
 }

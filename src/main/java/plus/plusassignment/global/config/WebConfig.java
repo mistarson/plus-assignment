@@ -16,7 +16,9 @@ public class WebConfig implements WebMvcConfigurer {
             "/api/normal-users/signup", "/api/normal-users/login",
             "/api/normal-users/duplication-username", "/api/normal-users/duplication-email",
 
-            "/api/social-users/login", "/api/social-users/duplication-email"
+            "/api/social-users/login", "/api/social-users/duplication-email",
+
+            "/api/emails/vertification-requests"
     };
 
     @Override

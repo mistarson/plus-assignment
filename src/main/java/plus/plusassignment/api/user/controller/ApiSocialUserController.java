@@ -33,7 +33,7 @@ public class ApiSocialUserController {
         return ResponseEntity.ok(tokenLoginDTO);
     }
 
-    @GetMapping("/duplication-email")
+    @GetMapping("/duplication-emails")
     public ResponseEntity<?> validateDuplicateEmail(@RequestParam String email) {
 
         apiSocialUserLoginService.validateDuplicateEmail(email);
