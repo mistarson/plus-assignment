@@ -31,14 +31,14 @@ public class JwtManager {
         this.refreshTime = refreshTime;
     }
 
-    public String createAccessToken(String userName) {
+    public String createAccessToken(String email) {
         long nowTime = new Date().getTime();
         Date issuedAt = new Date();
         Date expiration = new Date(nowTime + accessTime);
 
         return Jwts.builder()
                 .setIssuer(issuer)
-                .setSubject(userName)
+                .setSubject(email)
                 .setAudience(TokenType.ACCESS.toString())
                 .setExpiration(expiration)
                 .setIssuedAt(issuedAt)
@@ -46,14 +46,14 @@ public class JwtManager {
                 .compact();
     }
 
-    public String createRefreshToken(String userName) {
+    public String createRefreshToken(String email) {
         long nowTime = new Date().getTime();
         Date issuedAt = new Date();
         Date expiration = new Date(nowTime + refreshTime);
 
         return Jwts.builder()
                 .setIssuer(issuer)
-                .setSubject(userName)
+                .setSubject(email)
                 .setAudience(TokenType.REFRESH.toString())
                 .setExpiration(expiration)
                 .setIssuedAt(issuedAt)
@@ -61,15 +61,15 @@ public class JwtManager {
                 .compact();
     }
 
-    public TokenLoginDTO createAccessAndRefreshToken(String username) {
+    public TokenLoginDTO createAccessAndRefreshToken(String email) {
 
-        String accessToken = createAccessToken(username);
-        String refreshToken = createRefreshToken(username);
+        String accessToken = createAccessToken(email);
+        String refreshToken = createRefreshToken(email);
 
         return new TokenLoginDTO(accessToken, refreshToken);
     }
 
-    public String getUserNameFromToken(String token) {
+    public String getEmailFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody()
                 .getSubject();
     }

@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import plus.plusassignment.domain.user.entity.NormalUser;
 import plus.plusassignment.domain.user.repository.NormalUserRepository;
-import plus.plusassignment.global.exception.user.UserNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -18,11 +17,6 @@ public class NormalUserService {
 
     public Optional<NormalUser> findByEmail(String email) {
         return normalUserRepository.findByEmail(email);
-    }
-
-    public NormalUser findByUsername(String username) {
-        return normalUserRepository.findByUsername(username)
-                .orElseThrow(UserNotFoundException::new);
     }
 
     @Transactional

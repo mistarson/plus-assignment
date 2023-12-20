@@ -1,8 +1,10 @@
 package plus.plusassignment.api.user.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public record NormalUserLoginDTO(
-        String username,
-        String password
+        @NotBlank String email,
+        @NotBlank String password
 ) {
 
 }
