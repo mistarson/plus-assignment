@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import plus.plusassignment.api.user.dto.NormalUserLoginDTO;
 import plus.plusassignment.api.user.dto.NormalUserRegisterDTO;
 import plus.plusassignment.api.user.dto.NormalUserRegisterDTO.Request;
 import plus.plusassignment.api.user.dto.NormalUserRegisterDTO.Response;
@@ -24,6 +25,7 @@ import plus.plusassignment.domain.user.redis.MailAuthCodeService;
 import plus.plusassignment.domain.user.service.NormalUserService;
 import plus.plusassignment.global.exception.mailauth.AuthCodeMismatchedException;
 import plus.plusassignment.global.exception.user.EmailAlreadyExistException;
+import plus.plusassignment.global.exception.user.FailedLoginException;
 import plus.plusassignment.global.jwt.JwtManager;
 
 @ExtendWith(MockitoExtension.class)
@@ -123,6 +125,52 @@ class ApiNormalUserServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("일반 회원 로그인 테스트")
+    class NormalUserLogin {
 
+        String email = "yeowuli2@naver.com";
+        String password = "123456";
 
+        NormalUserLoginDTO requestDTO = new NormalUserLoginDTO(email, password);
+
+        @Test
+        @DisplayName("정상 로그인 테스트")
+        void loginNormalUser() {
+            //given
+            given(normalUserService.findByEmail(requestDTO.email())).willReturn(
+                    Optional.of(normalUser));
+            given(passwordEncoder.matches(requestDTO.password(),
+                    normalUser.getPassword())).willReturn(true);
+
+            // when - then
+            apiNormalUserService.loginNormalUser(requestDTO);
+        }
+
+        @Test
+        @DisplayName("요청한 이메일을 가진 회원이 없다면 예외가 발생한다.")
+        void loginNormalUserByNotExistUser() {
+            //given
+            given(normalUserService.findByEmail(requestDTO.email()))
+                    .willReturn(Optional.empty());
+
+            // when - then
+            assertThatThrownBy(() -> apiNormalUserService.loginNormalUser(requestDTO)).isInstanceOf(
+                    FailedLoginException.class);
+        }
+
+        @Test
+        @DisplayName("요청한 비밀번호가 일치하지 않는다면 예외가 발생한다.")
+        void loginNormalUserByMismatchedPassword(){
+            //given
+            given(normalUserService.findByEmail(requestDTO.email())).willReturn(
+                    Optional.of(normalUser));
+            given(passwordEncoder.matches(requestDTO.password(),
+                    normalUser.getPassword())).willReturn(false);
+
+            // when - then
+            assertThatThrownBy(() -> apiNormalUserService.loginNormalUser(requestDTO)).isInstanceOf(
+                    FailedLoginException.class);
+        }
+    }
 }
