@@ -2,6 +2,8 @@ package plus.plusassignment.global.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.util.StringUtils;
+import plus.plusassignment.global.exception.jwt.NoJwtException;
+import plus.plusassignment.global.exception.jwt.UnsupportedGrantTypeException;
 
 public class TokenUtils {
 
@@ -12,9 +14,12 @@ public class TokenUtils {
 
         String authorizationHeader = req.getHeader(AUTHORIZATION_HEADER);
 
-        if (!StringUtils.hasText(authorizationHeader) || !authorizationHeader.startsWith(
-                BEARER_PREFIX)) {
-            throw new IllegalArgumentException("인증 헤더가 비어있거나 잘못된 권한 부여 유형입니다.");
+        if (!StringUtils.hasText(authorizationHeader)) {
+            throw new NoJwtException();
+        }
+
+        if (!authorizationHeader.startsWith(BEARER_PREFIX)) {
+            throw new UnsupportedGrantTypeException();
         }
 
         return authorizationHeader.substring(BEARER_PREFIX.length());

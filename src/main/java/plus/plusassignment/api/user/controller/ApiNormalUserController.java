@@ -42,14 +42,6 @@ public class ApiNormalUserController {
         return ResponseEntity.ok(jwtLoginResponseDTO);
     }
 
-    @GetMapping("/duplication-usernames")
-    public ResponseEntity<?> validateDuplicateUsername(@RequestParam String username) {
-
-        apiNormalUserService.validateDuplicateUsername(username);
-
-        return ResponseEntity.ok("사용 가능");
-    }
-
     @GetMapping("/duplication-emails")
     public ResponseEntity<?> validateDuplicateEmail(@RequestParam String email) {
 

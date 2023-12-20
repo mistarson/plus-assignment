@@ -1,10 +1,7 @@
 package plus.plusassignment.global.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
@@ -83,11 +80,6 @@ public class JwtManager {
     }
 
     public void validateToken(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-        } catch (SecurityException | MalformedJwtException | ExpiredJwtException |
-                 UnsupportedJwtException | IllegalArgumentException e) {
-            throw e;
-        }
+        Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import plus.plusassignment.api.user.dto.SocialUserInfo;
 import plus.plusassignment.domain.user.entity.SocialUser;
 import plus.plusassignment.domain.user.service.SocialUserService;
+import plus.plusassignment.global.exception.user.EmailAlreadyExistException;
 import plus.plusassignment.global.jwt.JwtManager;
 import plus.plusassignment.global.jwt.TokenLoginDTO;
 
@@ -47,7 +48,7 @@ public class ApiSocialUserLoginService {
 
     public void validateDuplicateEmail(String email) {
         socialUserService.findByEmail(email)
-                .ifPresent(user -> {throw new IllegalArgumentException("중복된 이메일입니다.");});
+                .ifPresent(user -> {throw new EmailAlreadyExistException();});
     }
 
 }

@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import plus.plusassignment.domain.user.entity.NormalUser;
 import plus.plusassignment.domain.user.repository.NormalUserRepository;
+import plus.plusassignment.global.exception.user.EmailAlreadyExistException;
+import plus.plusassignment.global.exception.user.UserNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -14,23 +16,16 @@ public class NormalUserService {
 
     private final NormalUserRepository normalUserRepository;
 
-    public void findByUsernameIfPresentThrowException(String username) {
-
-        normalUserRepository.findByUsername(username).ifPresent(user -> {
-            throw new IllegalArgumentException("중복된 닉네임입니다.");
-        });
-    }
-
     public void findByEmailIfPresentThrowException(String email) {
 
         normalUserRepository.findByEmail(email).ifPresent(user -> {
-            throw new IllegalArgumentException("중복된 이메일입니다.");
+            throw new EmailAlreadyExistException();
         });
     }
 
     public NormalUser findByUsername(String username) {
         return normalUserRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저의 정보가 없습니다."));
+                .orElseThrow(UserNotFoundException::new);
     }
 
     @Transactional

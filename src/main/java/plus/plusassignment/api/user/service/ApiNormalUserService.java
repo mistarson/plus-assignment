@@ -9,6 +9,10 @@ import plus.plusassignment.domain.user.entity.NormalUser;
 import plus.plusassignment.domain.user.redis.MailAuthCode;
 import plus.plusassignment.domain.user.redis.MailAuthCodeService;
 import plus.plusassignment.domain.user.service.NormalUserService;
+import plus.plusassignment.global.exception.mailauth.AuthCodeMismatchedException;
+import plus.plusassignment.global.exception.user.FailedLoginException;
+import plus.plusassignment.global.exception.user.PasswordMismatchedException;
+import plus.plusassignment.global.exception.user.UserNotFoundException;
 import plus.plusassignment.global.jwt.JwtManager;
 import plus.plusassignment.global.jwt.TokenLoginDTO;
 
@@ -27,7 +31,7 @@ public class ApiNormalUserService {
     public NormalUserRegisterDTO.Response registerNormalUser(
             NormalUserRegisterDTO.Request requestDTO) {
 
-        validateDuplicateUser(requestDTO);
+        validateDuplicateEmail(requestDTO);
         validateVetificationEmailAuthCode(requestDTO.email(), requestDTO.authCode());
 
         NormalUser savedNormalUser = normalUserService.registerNormalUser(
@@ -36,9 +40,8 @@ public class ApiNormalUserService {
         return NormalUserRegisterDTO.Response.from(savedNormalUser);
     }
 
-    private void validateDuplicateUser(NormalUserRegisterDTO.Request requestDTO) {
+    private void validateDuplicateEmail(NormalUserRegisterDTO.Request requestDTO) {
 
-        normalUserService.findByUsernameIfPresentThrowException(requestDTO.username());
         normalUserService.findByEmailIfPresentThrowException(requestDTO.email());
     }
 
@@ -47,15 +50,18 @@ public class ApiNormalUserService {
         MailAuthCode mailAuthCode = mailAuthCodeService.findByAuthId(email);
 
         if (!mailAuthCode.authCode().equals(authCode)) {
-            throw new IllegalArgumentException("인증번호가 다릅니다.");
+            throw new AuthCodeMismatchedException();
         }
     }
 
     public TokenLoginDTO loginNormalUser(NormalUserLoginDTO normalUserLoginDTO) {
 
-        NormalUser normalUser = normalUserService.findByUsername(normalUserLoginDTO.username());
-
-        validatePassword(normalUserLoginDTO.password(), normalUser.getPassword());
+        try {
+            NormalUser normalUser = normalUserService.findByUsername(normalUserLoginDTO.username());
+            validatePassword(normalUserLoginDTO.password(), normalUser.getPassword());
+        } catch (UserNotFoundException | PasswordMismatchedException e) {
+            throw new FailedLoginException(e);
+        }
 
         return jwtManager.createAccessAndRefreshToken(normalUserLoginDTO.username());
     }
@@ -63,12 +69,8 @@ public class ApiNormalUserService {
     private void validatePassword(String password, String encodedPassword) {
 
         if (!passwordEncoder.matches(password, encodedPassword)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new PasswordMismatchedException();
         }
-    }
-
-    public void validateDuplicateUsername(String username) {
-        normalUserService.findByUsernameIfPresentThrowException(username);
     }
 
     public void validateDuplicateEmail(String email) {
