@@ -28,14 +28,14 @@ public class ApiSocialUserLoginService {
                 socialUserInfo.email());
 
         if (optionalSocialUser.isPresent()) {
-            String username = optionalSocialUser.get().getUsername();
-            return jwtManager.createAccessAndRefreshToken(username);
+            String email = optionalSocialUser.get().getEmail();
+            return jwtManager.createAccessAndRefreshToken(email);
         }
 
         SocialUser socialUser = socialUserService.registerSocialUser(
                 socialUserInfo.toEntity());
 
-        return jwtManager.createAccessAndRefreshToken(socialUser.getUsername());
+        return jwtManager.createAccessAndRefreshToken(socialUser.getEmail());
     }
 
     private SocialUserInfo getSocialUserInfo(String accessToken, String socialType) {
