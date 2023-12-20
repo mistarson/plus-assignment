@@ -10,6 +10,7 @@ import plus.plusassignment.domain.user.redis.MailAuthCode;
 import plus.plusassignment.domain.user.redis.MailAuthCodeService;
 import plus.plusassignment.domain.user.service.NormalUserService;
 import plus.plusassignment.global.exception.mailauth.AuthCodeMismatchedException;
+import plus.plusassignment.global.exception.user.EmailAlreadyExistException;
 import plus.plusassignment.global.exception.user.FailedLoginException;
 import plus.plusassignment.global.exception.user.PasswordMismatchedException;
 import plus.plusassignment.global.exception.user.UserNotFoundException;
@@ -42,7 +43,9 @@ public class ApiNormalUserService {
 
     private void validateDuplicateEmail(NormalUserRegisterDTO.Request requestDTO) {
 
-        normalUserService.findByEmailIfPresentThrowException(requestDTO.email());
+        normalUserService.findByEmail(requestDTO.email()).ifPresent(normalUser -> {
+            throw new EmailAlreadyExistException();
+        });
     }
 
     private void validateVetificationEmailAuthCode(String email, String authCode) {
@@ -74,6 +77,8 @@ public class ApiNormalUserService {
     }
 
     public void validateDuplicateEmail(String email) {
-        normalUserService.findByEmailIfPresentThrowException(email);
+        normalUserService.findByEmail(email).ifPresent(normalUser -> {
+            throw new EmailAlreadyExistException();
+        });
     }
 }

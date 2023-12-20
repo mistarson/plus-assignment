@@ -3,11 +3,11 @@ package plus.plusassignment.domain.user.service;
 import static plus.plusassignment.domain.user.constant.UserConstant.NORMAL_USER_ID_PREFIX;
 
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import plus.plusassignment.domain.user.entity.NormalUser;
 import plus.plusassignment.domain.user.repository.NormalUserRepository;
-import plus.plusassignment.global.exception.user.EmailAlreadyExistException;
 import plus.plusassignment.global.exception.user.UserNotFoundException;
 
 @Service
@@ -16,11 +16,8 @@ public class NormalUserService {
 
     private final NormalUserRepository normalUserRepository;
 
-    public void findByEmailIfPresentThrowException(String email) {
-
-        normalUserRepository.findByEmail(email).ifPresent(user -> {
-            throw new EmailAlreadyExistException();
-        });
+    public Optional<NormalUser> findByEmail(String email) {
+        return normalUserRepository.findByEmail(email);
     }
 
     public NormalUser findByUsername(String username) {
