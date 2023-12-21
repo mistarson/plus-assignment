@@ -24,18 +24,18 @@ public class ApiSocialUserLoginService {
 
         SocialUserInfo socialUserInfo = getSocialUserInfo(accessToken, socialType);
 
-        Optional<SocialUser> optionalSocialUser = socialUserService.findByEmail(
-                socialUserInfo.email());
-
-        if (optionalSocialUser.isPresent()) {
-            String email = optionalSocialUser.get().getEmail();
-            return jwtManager.createAccessAndRefreshToken(email);
+        if (!existsUserByEmail(socialUserInfo.email())) {
+            socialUserService.registerSocialUser(socialUserInfo.toEntity());
         }
 
-        SocialUser socialUser = socialUserService.registerSocialUser(
-                socialUserInfo.toEntity());
+        return jwtManager.createAccessAndRefreshToken(socialUserInfo.email());
+    }
 
-        return jwtManager.createAccessAndRefreshToken(socialUser.getEmail());
+    public boolean existsUserByEmail(String email) {
+
+        Optional<SocialUser> optionalSocialUser = socialUserService.findByEmail(email);
+
+        return optionalSocialUser.isPresent();
     }
 
     private SocialUserInfo getSocialUserInfo(String accessToken, String socialType) {
@@ -50,5 +50,4 @@ public class ApiSocialUserLoginService {
         socialUserService.findByEmail(email)
                 .ifPresent(user -> {throw new EmailAlreadyExistException();});
     }
-
 }
