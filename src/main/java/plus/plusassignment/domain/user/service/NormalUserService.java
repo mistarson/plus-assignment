@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import plus.plusassignment.domain.user.entity.NormalUser;
 import plus.plusassignment.domain.user.repository.NormalUserRepository;
+import plus.plusassignment.global.exception.user.UserNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -28,4 +29,11 @@ public class NormalUserService {
         return normalUserRepository.save(normalUser);
     }
 
+    public NormalUser findById(String userId) {
+        return normalUserRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
+
+    public boolean existById(String id) {
+        return normalUserRepository.existsById(id);
+    }
 }

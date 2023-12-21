@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import plus.plusassignment.domain.user.entity.SocialUser;
 import plus.plusassignment.domain.user.repository.SocialUserRepository;
+import plus.plusassignment.global.exception.user.UserNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -29,4 +30,7 @@ public class SocialUserService {
         return socialUserRepository.save(socialUser);
     }
 
+    public SocialUser findById(String userId) {
+        return socialUserRepository.findById(userId).orElseThrow(UserNotFoundException::new);
+    }
 }

@@ -62,12 +62,13 @@ public class ApiNormalUserService {
         try {
             NormalUser normalUser = normalUserService.findByEmail(normalUserLoginDTO.email())
                     .orElseThrow(UserNotFoundException::new);
+
             validatePassword(normalUserLoginDTO.password(), normalUser.getPassword());
+
+            return jwtManager.createAccessAndRefreshToken(normalUser.getId());
         } catch (UserNotFoundException | PasswordMismatchedException e) {
             throw new FailedLoginException(e);
         }
-
-        return jwtManager.createAccessAndRefreshToken(normalUserLoginDTO.email());
     }
 
     private void validatePassword(String password, String encodedPassword) {

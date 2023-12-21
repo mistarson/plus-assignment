@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 
 import java.util.Optional;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -59,40 +58,40 @@ class ApiSocialUserLoginServiceTest {
         oauthLoginServiceFactory = mockStatic(OauthLoginServiceFactory.class);
     }
 
-    @Nested
-    @DisplayName("요청한 이메일을 가진 회원이 있다면 true, 아니라면 false를 반환한다.")
-    class ExistsUserByEmail {
-
-        String email = socialUser.getEmail();
-
-        @Test
-        @DisplayName("요청한 이메일을 가진 회원이 있다면, true를 반환한다.")
-        void findByUserByEmailReturnTrue() {
-            //given
-            given(socialUserService.findByEmail(email)).willReturn(
-                    Optional.of(socialUser));
-
-            // when
-            boolean existsed = apiSocialUserLoginService.existsUserByEmail(email);
-
-            // then
-            Assertions.assertTrue(existsed);
-        }
-
-        @Test
-        @DisplayName("요청한 이메일을 가진 회원이 없다면, false를 반환한다")
-        void findByUserByEmailReturnFalse(){
-            //given
-            given(socialUserService.findByEmail(email)).willReturn(
-                    Optional.empty());
-
-            // when
-            boolean existsed = apiSocialUserLoginService.existsUserByEmail(email);
-
-            // then
-            Assertions.assertFalse(existsed);
-        }
-    }
+//    @Nested
+//    @DisplayName("요청한 이메일을 가진 회원이 있다면 true, 아니라면 false를 반환한다.")
+//    class ExistsUserByEmail {
+//
+//        String email = socialUser.getEmail();
+//
+//        @Test
+//        @DisplayName("요청한 이메일을 가진 회원이 있다면, true를 반환한다.")
+//        void findByUserByEmailReturnTrue() {
+//            //given
+//            given(socialUserService.findByEmail(email)).willReturn(
+//                    Optional.of(socialUser));
+//
+//            // when
+//            boolean existsed = apiSocialUserLoginService.existsUserByEmail(email);
+//
+//            // then
+//            Assertions.assertTrue(existsed);
+//        }
+//
+//        @Test
+//        @DisplayName("요청한 이메일을 가진 회원이 없다면, false를 반환한다")
+//        void findByUserByEmailReturnFalse(){
+//            //given
+//            given(socialUserService.findByEmail(email)).willReturn(
+//                    Optional.empty());
+//
+//            // when
+//            boolean existsed = apiSocialUserLoginService.existsUserByEmail(email);
+//
+//            // then
+//            Assertions.assertFalse(existsed);
+//        }
+//    }
 
     @Nested
     @DisplayName("회원가입 테스트")

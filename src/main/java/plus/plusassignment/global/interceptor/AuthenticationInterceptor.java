@@ -7,14 +7,12 @@ import io.jsonwebtoken.security.SecurityException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import plus.plusassignment.global.exception.common.ErrorCode;
 import plus.plusassignment.global.exception.jwt.JwtInvalidException;
 import plus.plusassignment.global.jwt.JwtManager;
 import plus.plusassignment.global.jwt.TokenUtils;
 
-@Component
 @RequiredArgsConstructor
 public class AuthenticationInterceptor implements HandlerInterceptor {
 
