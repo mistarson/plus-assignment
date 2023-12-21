@@ -32,8 +32,8 @@ public class ApiNormalUserService {
     public NormalUserRegisterDTO.Response registerNormalUser(
             NormalUserRegisterDTO.Request requestDTO) {
 
-        validateDuplicateEmail(requestDTO);
-        validateVetificationEmailAuthCode(requestDTO.email(), requestDTO.authCode());
+        validateDuplicateEmail(requestDTO.email());
+        validateEmailAuthCode(requestDTO.email(), requestDTO.authCode());
 
         NormalUser savedNormalUser = normalUserService.registerNormalUser(
                 requestDTO.toEntity(passwordEncoder));
@@ -41,14 +41,14 @@ public class ApiNormalUserService {
         return NormalUserRegisterDTO.Response.from(savedNormalUser);
     }
 
-    private void validateDuplicateEmail(NormalUserRegisterDTO.Request requestDTO) {
+    public void validateDuplicateEmail(String email) {
 
-        normalUserService.findByEmail(requestDTO.email()).ifPresent(normalUser -> {
+        normalUserService.findByEmail(email).ifPresent(normalUser -> {
             throw new EmailAlreadyExistException();
         });
     }
 
-    private void validateVetificationEmailAuthCode(String email, String authCode) {
+    public void validateEmailAuthCode(String email, String authCode) {
 
         MailAuthCode mailAuthCode = mailAuthCodeService.findByAuthId(email);
 
@@ -75,11 +75,5 @@ public class ApiNormalUserService {
         if (!passwordEncoder.matches(password, encodedPassword)) {
             throw new PasswordMismatchedException();
         }
-    }
-
-    public void validateDuplicateEmail(String email) {
-        normalUserService.findByEmail(email).ifPresent(normalUser -> {
-            throw new EmailAlreadyExistException();
-        });
     }
 }

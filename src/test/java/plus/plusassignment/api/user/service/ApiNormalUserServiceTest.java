@@ -59,6 +59,51 @@ class ApiNormalUserServiceTest {
     }
 
     @Nested
+    @DisplayName("이메일 중복 검증 테스트")
+    class ValidateDuplicateEmail {
+
+        String email = "yeowuli2@naver.com";
+
+        @Test
+        @DisplayName("요청한 이메일을 가진 회원이 있다면 예외가 발생한다.")
+        void validateDuplicateEmailNotThrowException(){
+            //given
+            given(normalUserService.findByEmail(email)).willReturn(Optional.of(normalUser));
+
+            // when - then
+            assertThatThrownBy(
+                    () -> apiNormalUserService.validateDuplicateEmail(email)).isInstanceOf(
+                    EmailAlreadyExistException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("이메일 인증 코드 검증 테스트")
+    class ValidateEmailAuthCode {
+
+        String email = "yeowuli2@naver.com";
+        String authCode = "654321";
+
+        MailAuthCode otherMailAuthCode = MailAuthCode.builder()
+                .authId("yeowuli2@naver.com")
+                .authCode("123456")
+                .build();
+
+        @Test
+        @DisplayName("사용자가 입력한 이메일 인증코드와 실제 발급했던 인증코드가 일치하지 않다면 예외가 발생한다.")
+        void validateEmailAuthCode(){
+            //given
+            given(mailAuthCodeService.findByAuthId(email)).willReturn(otherMailAuthCode);
+
+            // when - then
+            assertThatThrownBy(
+                    () -> apiNormalUserService.validateEmailAuthCode(email, authCode)).isInstanceOf(
+                    AuthCodeMismatchedException.class);
+        }
+
+    }
+
+    @Nested
     @DisplayName("일반 회원 회원가입 테스트")
     class NormalUserSignup {
 
