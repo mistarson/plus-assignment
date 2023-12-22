@@ -35,7 +35,8 @@ public enum ErrorCode {
     NOT_FOUND_COMMENT_EXCEPTION(401, "댓글 ID를 찾을 수 없습니다."),
 
     // 게시글
-    BOARD_NOT_FOUND_EXCEPTION(401, "게시글을 찾을 수 없습니다.");
+    NOT_FOUND_POST_EXCEPTION(401, "게시글을 찾을 수 없습니다.");
+
     private final int status;
 
     private final String message;

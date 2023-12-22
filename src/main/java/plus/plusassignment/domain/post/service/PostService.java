@@ -1,9 +1,13 @@
 package plus.plusassignment.domain.post.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import plus.plusassignment.domain.post.dao.PostWithUserDAO;
 import plus.plusassignment.domain.post.entity.Post;
 import plus.plusassignment.domain.post.repository.PostRepository;
+import plus.plusassignment.global.exception.post.PostNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -15,4 +19,11 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    public Post findById(Long postId) {
+        return postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+    }
+
+    public Page<PostWithUserDAO> getPostWithUserDAO(Pageable pageable) {
+        return postRepository.findPostsWithUser(pageable);
+    }
 }
