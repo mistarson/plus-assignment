@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 import plus.plusassignment.domain.common.BaseTime;
 
 @Getter
@@ -32,4 +33,14 @@ public class Post extends BaseTime {
     @Column(nullable = false)
     private String userId;
 
+    public void modify(Post modifyingPost) {
+
+        if (StringUtils.hasText(modifyingPost.title)) {
+            this.title = modifyingPost.getTitle();
+        }
+
+        if (StringUtils.hasText(modifyingPost.content)) {
+            this.content = modifyingPost.getContent();
+        }
+    }
 }

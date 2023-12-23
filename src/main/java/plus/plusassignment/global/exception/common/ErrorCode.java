@@ -31,7 +31,7 @@ public enum ErrorCode {
     NOT_FOUND_AUTH_CODE_EXCEPTION(401, "없는 인증 번호입니다."),
 
     // Comment
-    REJECTED_EXCUTION_EXCEPTION(401, "작성자만 수정할 수 있습니다."),
+    REJECT_MODIFIYING_POST_EXCEPTION(403, "작성자만 수정할 수 있습니다."),
     NOT_FOUND_COMMENT_EXCEPTION(401, "댓글 ID를 찾을 수 없습니다."),
 
     // 게시글

@@ -6,6 +6,6 @@ import plus.plusassignment.domain.post.dao.PostWithUserDAO;
 
 public interface CustomPostRepository {
 
-    Page<PostWithUserDAO> findPostsWithUser(Pageable pageable);
+    Page<PostWithUserDAO> findAllPostsWithUser(Pageable pageable);
 
 }

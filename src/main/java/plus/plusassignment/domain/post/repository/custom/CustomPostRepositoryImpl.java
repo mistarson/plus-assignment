@@ -29,7 +29,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
     }
 
     @Override
-    public Page<PostWithUserDAO> findPostsWithUser(Pageable pageable) {
+    public Page<PostWithUserDAO> findAllPostsWithUser(Pageable pageable) {
         List<PostWithUserDAO> content = jpaQueryFactory
                 .select(Projections.constructor(PostWithUserDAO.class, post.id, post.title,
                         post.content, post.createdTime, socialUser.id.coalesce(normalUser.id),

@@ -23,7 +23,11 @@ public class PostService {
         return postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
     }
 
-    public Page<PostWithUserDAO> getPostWithUserDAO(Pageable pageable) {
-        return postRepository.findPostsWithUser(pageable);
+    public Page<PostWithUserDAO> getPostAllWithUserDAO(Pageable pageable) {
+        return postRepository.findAllPostsWithUser(pageable);
+    }
+
+    public void modifyPost(Post post, Post modifyingPost) {
+        post.modify(modifyingPost);
     }
 }

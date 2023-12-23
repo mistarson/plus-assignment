@@ -6,12 +6,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import plus.plusassignment.api.post.dto.PostGetDTO;
+import plus.plusassignment.api.post.dto.PostModifyDTO;
 import plus.plusassignment.api.post.dto.PostSaveDTO;
 import plus.plusassignment.api.post.service.ApiPostService;
 import plus.plusassignment.global.argumentresolver.LoginUserId;
@@ -46,5 +48,16 @@ public class ApiPostController {
         Page<PostGetDTO> postGetDTOS = apiPostService.getPosts(pageable);
 
         return ResponseEntity.ok(postGetDTOS);
+    }
+
+    @PatchMapping("/{postId}")
+    public ResponseEntity<?> modifyPost(
+            @PathVariable Long postId,
+            @Valid @RequestBody PostModifyDTO.Request requestDTO,
+            @LoginUserId String userId) {
+
+        PostModifyDTO.Response responseDTO = apiPostService.modifyPost(postId, requestDTO, userId);
+
+        return ResponseEntity.ok(responseDTO);
     }
 }
