@@ -1,5 +1,8 @@
 package plus.plusassignment.domain.post.service;
 
+import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,5 +37,13 @@ public class PostService {
 
     public void deletePost(Post post) {
         post.deletePost();
+    }
+
+    @Transactional
+    public void delete90DaysOldData(LocalDateTime diffTime) {
+
+        List<Post> oldPosts = postRepository.findAllByCreatedTimeLessThanEqual(diffTime);
+
+        oldPosts.forEach(Post::deletePost);
     }
 }
