@@ -33,7 +33,12 @@ public class NormalUserService {
         return normalUserRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-    public boolean existById(String id) {
-        return normalUserRepository.existsById(id);
+    public void validateExistsUserById(String userId) {
+
+        boolean isExistsUser = normalUserRepository.existsById(userId);
+
+        if (isExistsUser) {
+            throw new UserNotFoundException();
+        }
     }
 }

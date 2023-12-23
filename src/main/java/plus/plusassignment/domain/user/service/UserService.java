@@ -25,4 +25,13 @@ public class UserService {
         return normalUser.getUsername();
     }
 
+    public void validateExistsUserById(String userId) {
+
+        if (UserUtils.isSocialUser(userId)) {
+            socialUserService.validateExistsUserById(userId);
+        } else {
+            normalUserService.validateExistsUserById(userId);
+        }
+    }
+
 }
