@@ -19,8 +19,9 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public Post findById(Long postId) {
-        return postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
+    public Post findByIdNotDeleted(Long postId) {
+        return postRepository.findByIdAndDeletedFalse(postId)
+                .orElseThrow(PostNotFoundException::new);
     }
 
     public Page<PostWithUserDAO> getPostAllWithUserDAO(Pageable pageable) {
@@ -29,5 +30,9 @@ public class PostService {
 
     public void modifyPost(Post post, Post modifyingPost) {
         post.modify(modifyingPost);
+    }
+
+    public void deletePost(Post post) {
+        post.deletePost();
     }
 }

@@ -33,6 +33,9 @@ public class Post extends BaseTime {
     @Column(nullable = false)
     private String userId;
 
+    @Column(nullable = false)
+    private boolean deleted;
+
     public void modify(Post modifyingPost) {
 
         if (StringUtils.hasText(modifyingPost.title)) {
@@ -42,5 +45,9 @@ public class Post extends BaseTime {
         if (StringUtils.hasText(modifyingPost.content)) {
             this.content = modifyingPost.getContent();
         }
+    }
+
+    public void deletePost() {
+        this.deleted = true;
     }
 }

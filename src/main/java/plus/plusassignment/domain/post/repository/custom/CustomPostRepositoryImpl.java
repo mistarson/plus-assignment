@@ -38,6 +38,7 @@ public class CustomPostRepositoryImpl implements CustomPostRepository {
                 .from(post)
                 .leftJoin(socialUser).on(socialUser.id.eq(post.userId))
                 .leftJoin(normalUser).on(normalUser.id.eq(post.userId))
+                .where(post.deleted.isFalse())
                 .orderBy(getOrderSpecifier(pageable.getSort()).toArray(OrderSpecifier[]::new))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

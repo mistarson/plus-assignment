@@ -15,6 +15,7 @@ public class PostSaveDTO {
                     .title(title)
                     .content(content)
                     .userId(userId)
+                    .deleted(false)
                     .build();
         }
     }

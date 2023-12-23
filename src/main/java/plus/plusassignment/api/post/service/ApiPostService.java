@@ -39,7 +39,7 @@ public class ApiPostService {
 
     public PostGetDTO getPost(Long postId) {
 
-        Post post = postService.findById(postId);
+        Post post = postService.findByIdNotDeleted(postId);
         String username = userService.getUsernameFromUserId(post.getUserId());
 
         return PostGetDTO.of(post, username);
@@ -59,7 +59,7 @@ public class ApiPostService {
     @Transactional
     public Response modifyPost(Long postId, PostModifyDTO.Request requestDTO, String userId) {
 
-        Post post = postService.findById(postId);
+        Post post = postService.findByIdNotDeleted(postId);
 
         validateModifyingAuthority(post.getUserId(), userId);
 
@@ -67,6 +67,16 @@ public class ApiPostService {
         String username = userService.getUsernameFromUserId(post.getUserId());
 
         return PostModifyDTO.Response.of(post, username);
+    }
+
+    @Transactional
+    public void deletePost(Long postId, String userId) {
+
+        Post post = postService.findByIdNotDeleted(postId);
+
+        validateModifyingAuthority(userId, post.getUserId());
+
+        postService.deletePost(post);
     }
 
     public void validateModifyingAuthority(String userIdFromDB, String userIdFromRequest) {
