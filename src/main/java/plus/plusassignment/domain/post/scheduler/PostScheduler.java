@@ -13,7 +13,7 @@ public class PostScheduler {
     private final PostService postService;
 
     // 초 분 시 일 월 요일 연도
-    @Scheduled(cron = "* * 0 * * *", zone = "Asia/Seoul")
+    @Scheduled(cron = "* 0 0 * * *", zone = "Asia/Seoul")
     public void scheduleDelete90DaysOldPost() {
         postService.delete90DaysOldData(LocalDateTime.now().minusDays(90));
     }

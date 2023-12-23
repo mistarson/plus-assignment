@@ -32,7 +32,7 @@ public enum ErrorCode {
 
     // Comment
     REJECT_MODIFIYING_POST_EXCEPTION(403, "작성자만 수정할 수 있습니다."),
-    NOT_FOUND_COMMENT_EXCEPTION(401, "댓글 ID를 찾을 수 없습니다."),
+    NOT_FOUND_COMMENT_EXCEPTION(401, "해당 댓글을 찾을 수 없습니다."),
 
     // 게시글
     NOT_FOUND_POST_EXCEPTION(401, "게시글을 찾을 수 없습니다.");

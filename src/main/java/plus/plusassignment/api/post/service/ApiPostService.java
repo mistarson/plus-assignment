@@ -13,7 +13,7 @@ import plus.plusassignment.api.post.dto.PostModifyDTO;
 import plus.plusassignment.api.post.dto.PostModifyDTO.Response;
 import plus.plusassignment.api.post.dto.PostSaveDTO;
 import plus.plusassignment.api.post.dto.PostSaveDTO.Request;
-import plus.plusassignment.domain.post.dao.PostWithUserDAO;
+import plus.plusassignment.domain.post.dao.PostWithUser;
 import plus.plusassignment.domain.post.entity.Post;
 import plus.plusassignment.domain.post.service.PostService;
 import plus.plusassignment.domain.user.service.UserService;
@@ -47,13 +47,13 @@ public class ApiPostService {
 
     public Page<PostGetDTO> getPosts(Pageable pageable) {
 
-        Page<PostWithUserDAO> postWithUserDAO = postService.getPostAllWithUserDAO(pageable);
+        Page<PostWithUser> postWithUser = postService.getPostAllWithUser(pageable);
 
-        List<PostWithUserDAO> postWithUserDAOContent = postWithUserDAO.getContent();
-        List<PostGetDTO> postGetDTOContent = postWithUserDAOContent.stream().map(PostGetDTO::from)
+        List<PostWithUser> postWithUserContent = postWithUser.getContent();
+        List<PostGetDTO> postGetDTOContent = postWithUserContent.stream().map(PostGetDTO::from)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(postGetDTOContent, postWithUserDAO.getPageable(), postWithUserDAO.getTotalElements());
+        return new PageImpl<>(postGetDTOContent, postWithUser.getPageable(), postWithUser.getTotalElements());
     }
 
     @Transactional

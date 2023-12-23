@@ -12,14 +12,14 @@ public class CommentSaveDTO {
             Long commentId,
             String content,
             Long postId,
-            String userId){
+            String username){
 
-        public static Response of(Comment comment, Long postId, String userId) {
+        public static Response of(Comment comment, Long postId, String username) {
             return Response.builder()
                     .commentId(comment.getId())
                     .content(comment.getContent())
                     .postId(postId)
-                    .userId(userId)
+                    .username(username)
                     .build();
         }
 

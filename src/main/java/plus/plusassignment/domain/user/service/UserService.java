@@ -24,14 +24,4 @@ public class UserService {
         NormalUser normalUser = normalUserService.findById(userId);
         return normalUser.getUsername();
     }
-
-    public void validateExistsUserById(String userId) {
-
-        if (UserUtils.isSocialUser(userId)) {
-            socialUserService.validateExistsUserById(userId);
-        } else {
-            normalUserService.validateExistsUserById(userId);
-        }
-    }
-
 }

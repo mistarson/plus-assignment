@@ -2,7 +2,7 @@ package plus.plusassignment.api.post.dto;
 
 import java.time.LocalDateTime;
 import lombok.Builder;
-import plus.plusassignment.domain.post.dao.PostWithUserDAO;
+import plus.plusassignment.domain.post.dao.PostWithUser;
 import plus.plusassignment.domain.post.entity.Post;
 
 @Builder
@@ -23,13 +23,13 @@ public record PostGetDTO(
                 .build();
     }
 
-    public static PostGetDTO from(PostWithUserDAO postWithUserDAO) {
+    public static PostGetDTO from(PostWithUser postWithUser) {
         return PostGetDTO.builder()
-                .id(postWithUserDAO.postId())
-                .title(postWithUserDAO.postTitle())
-                .content(postWithUserDAO.postContent())
-                .poster(postWithUserDAO.posterName())
-                .createdTime(postWithUserDAO.postCreatedTime())
+                .id(postWithUser.postId())
+                .title(postWithUser.postTitle())
+                .content(postWithUser.postContent())
+                .poster(postWithUser.posterName())
+                .createdTime(postWithUser.postCreatedTime())
                 .build();
     }
 

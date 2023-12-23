@@ -34,12 +34,4 @@ public class SocialUserService {
         return socialUserRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
-    public void validateExistsUserById(String userId) {
-
-        boolean isExistsUser = socialUserRepository.existsById(userId);
-
-        if (isExistsUser) {
-            throw new UserNotFoundException();
-        }
-    }
 }

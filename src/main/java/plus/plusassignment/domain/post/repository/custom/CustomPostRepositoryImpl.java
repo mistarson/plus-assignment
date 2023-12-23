@@ -10,28 +10,25 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.support.PageableExecutionUtils;
-import plus.plusassignment.domain.post.dao.PostWithUserDAO;
+import plus.plusassignment.domain.post.dao.PostWithUser;
 import plus.plusassignment.domain.post.entity.Post;
 
+@RequiredArgsConstructor
 public class CustomPostRepositoryImpl implements CustomPostRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
-    public CustomPostRepositoryImpl(EntityManager em) {
-        jpaQueryFactory = new JPAQueryFactory(em);
-    }
-
     @Override
-    public Page<PostWithUserDAO> findAllPostsWithUser(Pageable pageable) {
-        List<PostWithUserDAO> content = jpaQueryFactory
-                .select(Projections.constructor(PostWithUserDAO.class, post.id, post.title,
+    public Page<PostWithUser> findAllPostsWithUser(Pageable pageable) {
+        List<PostWithUser> content = jpaQueryFactory
+                .select(Projections.constructor(PostWithUser.class, post.id, post.title,
                         post.content, post.createdTime, socialUser.id.coalesce(normalUser.id),
                         socialUser.username.coalesce(normalUser.username),
                         socialUser.email.coalesce(normalUser.email)))
