@@ -50,6 +50,25 @@
 ### 느낀 점
 이 프로젝트를 진행하면서 여러 고민을 많이 한 탓에 모든 기능을 완벽하게 구현하지 못했다. 하지만 그보다 더 값진 경험들을 많이 한 것 같아서 뜻깊은 프로젝트였다. 팀 프로젝트라면하지 못했을 내용들을 과감하게 했던 것 같다. 그리고 언제나 가장 가장 제일로 어려운 건 `이름짓기`인건 변함이 없는 것 같다.
 
+## ERD
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/cecf40d7-6ac9-4d47-9a49-8d323b4dbabe)
+
+## API 명세서
+**일반 유저**
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/27327339-4df1-414b-a0ee-47a7e5dd4a17)
+
+**소셜 유저**
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/6f624a06-6431-4d86-b0ad-0d5379e69537)
+
+**게시글**
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/2441633b-cee5-4179-862f-c0d56238bd5e)
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/98e3d7c5-c017-4cce-9736-2eeeefaa1c67)
+
+**댓글**
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/a7d6e5eb-8537-4288-b851-ab902f71e3fd)
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/5950d351-2b52-46ba-b5bf-e0c731a7fd18)
+![image](https://github.com/mistarson/plus-assignment/assets/40788498/a8ee8829-377b-497d-a2ae-abbe65d7f037)
+
 ## 구현 기능 체크 리스트
 - 💬  12/12 - 회원 가입 API
     - [x]  닉네임, 비밀번호, 비밀번호 확인을 **request**에서 전달받기
